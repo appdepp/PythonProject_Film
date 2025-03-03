@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 # Загружаем переменные окружения из .env-файла
-load_dotenv(dotenv_path="/Users/oleksandrtkachenko/PycharmProjects/PythonProject_Tkachenko/.env")
+load_dotenv(dotenv_path="/Users/oleksandrtkachenko/PycharmProjects/PythonProject_Film/.env")
 
 # База фильмов (Sakila)
 FILM_DB_CONFIG = {

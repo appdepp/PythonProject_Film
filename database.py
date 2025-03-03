@@ -10,7 +10,7 @@ def get_db_connection(db_config):
         print(f"Ошибка при подключении к базе данных: {e}")
         return None
 
-# Функция для создания таблицы логов запросов (для отслеживания частоты запросов)
+# Функция для создания таблицы логов запросов
 def init_log_table():
     connection = get_db_connection(LOG_DB_CONFIG)
     cursor = connection.cursor()
@@ -42,7 +42,7 @@ def get_top_frequent_queries():
     cursor.close()
     connection.close()
 
-    return top_queries  # Возвращаем список запросов с их частотой
+    return top_queries  # Возвращаем список ТОП-10 запросов
 
 # Функция для получения всех жанров
 def get_all_genres():

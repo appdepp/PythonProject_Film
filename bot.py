@@ -171,7 +171,7 @@ def send_message_in_chunks(chat_id, message):
     if message:
         bot.send_message(chat_id, message)
 
-# Перезапуск бота при разрыве соединения
+# Перезапуск чатбота при разрыве соединения
 while True:
     try:
         bot.polling(none_stop=True, timeout=60)
