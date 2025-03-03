@@ -85,7 +85,7 @@ def main():
                 print("\nЗапросы не найдены.")
 
         elif search_option == "4":
-            print("Выход из программы...")
+            print("Выход  из программы...")
             break
 
         else:
