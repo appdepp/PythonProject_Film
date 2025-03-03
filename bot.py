@@ -72,10 +72,10 @@ def handle_buttons(message):
     elif message.text == "📊 Топ-10 запросов":
         send_top_queries(message)
     elif message.text == "👋 Выход":
-        bot.send_message(message.chat.id, "Бот завершает работу. До встречи! 👋",
+        bot.send_message(message.chat.id, "👋 Бот завершает работу. До встречи! 👋",
                          reply_markup=telebot.types.ReplyKeyboardRemove())
     else:
-        bot.send_message(message.chat.id, "Я не понимаю эту команду. Выбери из меню.", reply_markup=main_menu())
+        bot.send_message(message.chat.id, "👋 Я не понимаю эту команду. Выбери из меню.", reply_markup=main_menu())
 
 # Поиск по названию фильма
 def search_by_title(message):
