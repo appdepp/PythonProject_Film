@@ -18,8 +18,8 @@ def init_log_table():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS alex_search_logs (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        query VARCHAR(255) UNIQUE,
-        count INT DEFAULT 1
+        query_text VARCHAR(255) UNIQUE,
+        count_query INT DEFAULT 1
     )
     """)
     connection.commit()
@@ -32,9 +32,9 @@ def get_top_frequent_queries():
     cursor = connection.cursor()
 
     cursor.execute("""
-        SELECT query, count 
+        SELECT query_text, count_query
         FROM alex_search_logs 
-        ORDER BY count DESC 
+        ORDER BY count_query DESC 
         LIMIT 10
     """)
 
@@ -65,31 +65,35 @@ def get_all_years():
     return years
 
 # Функция для сохранения запроса в лог
-def save_query_to_log(query, genre=None, year=None):
+def save_query_to_log(query_text=None, genre=None, year=None):
     connection = get_db_connection(LOG_DB_CONFIG)
     cursor = connection.cursor()
 
-    # Формируем запрос в зависимости от наличия жанра и года
-    if genre and year:
-        query = f"Жанр: {genre}, Год: {year}"
+    # Формируем текст запроса
+    if query_text:
+        log_text = query_text
+    elif genre and year:
+        log_text = f"Жанр: {genre}, Год: {year}"
+    else:
+        log_text = "Ничего не найдено"
 
     # Проверка, существует ли уже такой запрос в таблице
-    cursor.execute("SELECT count FROM alex_search_logs WHERE query = %s", (query,))
+    cursor.execute("SELECT count_query FROM alex_search_logs WHERE query_text = %s", (log_text,))
     result = cursor.fetchone()
 
     if result:
         # Если запрос уже существует, увеличиваем счетчик
         cursor.execute("""
             UPDATE alex_search_logs
-            SET count = count + 1
-            WHERE query = %s
-        """, (query,))
+            SET count_query = count_query + 1
+            WHERE query_text = %s
+        """, (log_text,))
     else:
         # Если запрос новый, добавляем его в таблицу с начальным значением счетчика 1
         cursor.execute("""
-            INSERT INTO alex_search_logs (query, count) 
+            INSERT INTO alex_search_logs (query_text, count_query) 
             VALUES (%s, 1)
-        """, (query,))
+        """, (log_text,))
 
     connection.commit()
     cursor.close()

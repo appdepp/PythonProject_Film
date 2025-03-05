@@ -1,7 +1,7 @@
 import telebot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 from database import get_db_connection, save_query_to_log, get_all_genres, get_all_years, get_top_frequent_queries
-from config import FILM_DB_CONFIG, LOG_DB_CONFIG, TELEGRAM_BOT_TOKEN
+from config import FILM_DB_CONFIG, TELEGRAM_BOT_TOKEN
 import time
 import requests.exceptions
 
@@ -43,15 +43,15 @@ def send_top_queries(message):
         top_queries = get_top_frequent_queries()
         if top_queries:
             print("\nТоп-10 самых частых запросов:")
-            for i, (query, count) in enumerate(top_queries, 1):
-                print(f"{i}. '{query}' – {count} раз(а).")
+            for i, (query_text, count_query) in enumerate(top_queries, 1):
+                print(f"{i}. '{query_text}' – {count_query} раз(а).")
         else:
             print("\nЗапросы не найдены.")
 
         if top_queries:
             response = "📊 Топ-10 популярных запросов:\n"
-            for i, (query, count) in enumerate(top_queries, 1):
-                response += f"{i}. {query} – {count} раз(а)\n"
+            for i, (query_text, count_query) in enumerate(top_queries, 1):
+                response += f"{i}. {query_text} – {count_query} раз(а)\n"
         else:
             response = "❌ Запросов пока нет."
 
@@ -119,7 +119,7 @@ def choose_genre(message):
 # Выбор года
 def choose_year(message):
     genre = message.text
-    years = sorted(get_all_years(), reverse=True)[:35]
+    years = sorted(get_all_years(), reverse=True)[:36]
 
     if not years:
         bot.send_message(message.chat.id, "❌ Годы не найдены в базе.")
@@ -153,7 +153,7 @@ def search_by_genre_and_year(message, genre):
         else:
             response = "❌ Ничего не найдено."
 
-        save_query_to_log(f"Жанр: {genre}, Год: {year}")
+        save_query_to_log(f"Поиск по жанру: {genre}, год: {year}")
         send_message_in_chunks(message.chat.id, response)
 
     except ValueError:
