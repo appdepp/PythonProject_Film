@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 # Загружаем переменные окружения из .env-файла
-load_dotenv(dotenv_path="/Users/oleksandrtkachenko/PycharmProjects/PythonProject_Film/.env")
+load_dotenv()
 
 # База фильмов (Sakila)
 FILM_DB_CONFIG = {
@@ -22,8 +22,3 @@ LOG_DB_CONFIG = {
 
 # Токен Telegram-бота
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', 'default_token')
-
-# Вывод конфигурации для проверки
-print("FILM_DB_CONFIG:", FILM_DB_CONFIG)
-print("LOG_DB_CONFIG:", LOG_DB_CONFIG)
-print("TELEGRAM_BOT_TOKEN:", TELEGRAM_BOT_TOKEN)
